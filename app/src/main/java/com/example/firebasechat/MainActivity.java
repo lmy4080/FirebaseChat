@@ -3,17 +3,24 @@ package com.example.firebasechat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private RecyclerView mMessageRecyclerView;
     private EditText mMessageEditText;
     public static final String MESSAGE_CHILD = "messages";
+
+    // 어댑터
+    private FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder> mFirebaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +96,43 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 mMessageEditText.setText("");
             }
         });
+
+        // 쿼리 수행 위치
+        Query query = mFirebaseDatabaseReference.child(MESSAGE_CHILD);
+        // 옵션
+        FirebaseRecyclerOptions<ChatMessage> options = new FirebaseRecyclerOptions.Builder<ChatMessage>()
+                .setQuery(query, ChatMessage.class)
+                .build();
+
+        // 어댑터
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull ChatMessage model) {
+
+                holder.messageTextView.setText(model.getText());
+                holder.messengerTextView.setText(model.getName());
+
+                if(model.getPhotoUrl() != null) {
+                    holder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_account_circle_black_24dp));
+                } else {
+                    Glide.with(MainActivity.this)
+                            .load(model.getPhotoUrl())
+                            .into(holder.messengerImageView);
+                }
+            }
+
+            @NonNull
+            @Override
+            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false);
+                return new MessageViewHolder(view);
+            }
+        };
+
+        // 리사이클러뷰에 레이아웃 매니저 어댑터 설정
+        mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
     }
 
     @Override
@@ -113,6 +161,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Snackbar.make(getWindow().getDecorView().getRootView(), "Google Play Services Error", Snackbar.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // FirebaseRecyclerAdapter 실시간 쿼리 시작
+        mFirebaseAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // FirebaseRecyclerAdapter 실시간 쿼리 중지
+        mFirebaseAdapter.stopListening();
+    }
+
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageTextView;
         ImageView messageImageView;
@@ -126,6 +188,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             messengerTextView = v.findViewById(R.id.messengerTextView);
             messengerImageView = v.findViewById(R.id.messengerImageView);
         }
-
     }
 }
