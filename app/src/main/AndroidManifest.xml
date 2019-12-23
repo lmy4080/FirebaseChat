@@ -24,7 +24,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!-- FCM 기본 채널 ID 설정, 오레오 이상 필수 -->ㅋ
+        <!-- FCM 기본 채널 ID 설정, 오레오 이상 필수 -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="default_channel_id" />
