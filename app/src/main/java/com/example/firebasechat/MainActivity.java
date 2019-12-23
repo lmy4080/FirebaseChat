@@ -2,9 +2,11 @@ package com.example.firebasechat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +20,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     // firebase 인스턴스 변수
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private DatabaseReference mFirebaseDatabaseReference;
 
     // Google
     private GoogleApiClient mGoogleApiClient;
@@ -34,7 +39,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private String mUsername;
     private String mPhotoUrl;
 
+    // UI Components
     private RecyclerView mMessageRecyclerView;
+    private EditText mMessageEditText;
+    public static final String MESSAGE_CHILD = "messages";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +70,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         }
 
+        // firebase database 초기화
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
+        // UI 초기화
         mMessageRecyclerView = findViewById(R.id.message_recycler_view);
+        mMessageEditText = findViewById(R.id.message_edit);
+        findViewById(R.id.send_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("OnClick", "onClick: called.");
+                ChatMessage chatMessage = new ChatMessage(mMessageEditText.getText().toString(), mUsername, mPhotoUrl, null);
+                mFirebaseDatabaseReference.child(MESSAGE_CHILD).push().setValue(chatMessage);
+                mMessageEditText.setText("");
+            }
+        });
     }
 
     @Override
