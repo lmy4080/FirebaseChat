@@ -1,5 +1,10 @@
 package com.example.firebasechat.model.main;
 
+/**
+ * Class name: MainModel
+ * Description: MainActivity 의 Data Model
+ * */
+
 import android.content.Context;
 import android.util.Log;
 

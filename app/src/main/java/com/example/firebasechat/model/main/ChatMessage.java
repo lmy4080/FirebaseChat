@@ -1,5 +1,10 @@
 package com.example.firebasechat.model.main;
 
+/**
+ * Class name: ChatMessage
+ * Description: Firebase Database 의  Data Model
+ * */
+
 public class ChatMessage {
     private String id; // db에 저장할 id
     private String text; // 메시지

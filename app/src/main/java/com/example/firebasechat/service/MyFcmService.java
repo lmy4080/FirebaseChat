@@ -1,5 +1,10 @@
 package com.example.firebasechat.service;
 
+/**
+ * Class name: MyFcmService
+ * Description: PCM(Firebase Cloud Messaging)을 위한 서비스
+ * */
+
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;

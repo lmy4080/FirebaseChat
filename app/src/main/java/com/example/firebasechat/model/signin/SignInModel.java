@@ -1,5 +1,10 @@
 package com.example.firebasechat.model.signin;
 
+/**
+ * Class name: SignInModel
+ * Description: SignInActivity 의 Data Model
+ * */
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;

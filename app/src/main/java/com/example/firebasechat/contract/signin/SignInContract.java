@@ -1,5 +1,10 @@
 package com.example.firebasechat.contract.signin;
 
+/**
+ * Interface name: SignInContract
+ * Description: SignIn Activity 의 Contract 인터페이스
+ * */
+
 import android.content.Context;
 import android.content.Intent;
 

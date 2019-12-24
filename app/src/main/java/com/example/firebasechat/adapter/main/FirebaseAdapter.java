@@ -1,5 +1,10 @@
 package com.example.firebasechat.adapter.main;
 
+/**
+ * Class name: FirebaseAdapter
+ * Description: Main Activity 의 RecyclerView 어댑터
+ * */
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;

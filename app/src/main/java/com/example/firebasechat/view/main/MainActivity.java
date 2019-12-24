@@ -1,5 +1,11 @@
 package com.example.firebasechat.view.main;
 
+/**
+ * Class name: MainActivity
+ * Description: 앱의 메인 화면
+ *              SignIn 버튼 클릭 시 구글 로그인 화면으로 이동
+ * */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;

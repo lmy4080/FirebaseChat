@@ -1,5 +1,10 @@
 package com.example.firebasechat.contract.main;
 
+/**
+ * Interface name: MainContract
+ * Description: Main Activity 의 Contract 인터페이스
+ * */
+
 import android.content.Context;
 
 import androidx.fragment.app.FragmentActivity;

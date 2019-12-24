@@ -1,5 +1,10 @@
 package com.example.firebasechat.presenter.signin;
 
+/**
+ * Class name: SignInPresenter
+ * Description: SignInActivity 의 View 를 가진 SignInContract.Presenter
+ * */
+
 import android.content.Context;
 import android.content.Intent;
 

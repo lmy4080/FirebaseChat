@@ -1,5 +1,10 @@
 package com.example.firebasechat.presenter.main;
 
+/**
+ * Class name: MainPresenter
+ * Description: MainActivity 의 View 를 가진 MainContract.Presenter
+ * */
+
 import android.content.Context;
 
 import androidx.fragment.app.FragmentActivity;

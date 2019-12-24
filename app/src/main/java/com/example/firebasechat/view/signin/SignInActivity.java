@@ -1,5 +1,11 @@
 package com.example.firebasechat.view.signin;
 
+/**
+ * Class name: SignInActivity
+ * Description: 로그인 화면
+ *              로그인 시 채팅방 입장
+ * */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
