@@ -1,0 +1,24 @@
+package com.example.firebasechat.contract.signin;
+
+import android.content.Context;
+import android.content.Intent;
+
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+
+public interface SignInContract {
+
+    interface View {
+        void signIn(GoogleApiClient googleApiClient);
+        void showSnackbar(String msg);
+        void moveMainActivity();
+    }
+
+    interface Presenter {
+        void initFirebaseAuth();
+        void initGoogleApiClient(Context context, FragmentActivity fragmentActivity, GoogleApiClient.OnConnectionFailedListener onConnectionFailedListener);
+        void signIn();
+        void sendResult(Intent data);
+    }
+}
