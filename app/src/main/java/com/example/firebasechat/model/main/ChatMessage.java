@@ -1,4 +1,4 @@
-package com.example.firebasechat;
+package com.example.firebasechat.model.main;
 
 public class ChatMessage {
     private String id; // db에 저장할 id

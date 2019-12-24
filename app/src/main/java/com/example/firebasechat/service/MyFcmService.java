@@ -1,4 +1,4 @@
-package com.example.firebasechat;
+package com.example.firebasechat.service;
 
 import android.util.Log;
 
